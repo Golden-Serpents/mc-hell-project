@@ -63,8 +63,9 @@ MC_hell_messages=[connor_1, connor_2, suket_2, suket_3, suket_4, h4ck3r_1, xi_1,
 
 # Post the message to the Discord webhook at a random interval via random message selection
 
-def verbal_abuse():
-    while exitloop==False:
+def verbal_abuse():     ##defining the process to loop the webhook
+    
+    while exitloop==False:      ##this can be used to temporarily stop the loop while it continues checking to see if it has been reactivated
             
         while loop == True:
                 
@@ -92,7 +93,7 @@ def verbal_abuse():
 
 class Application(tk.Frame):
 
-    def __init__(self, master=None):
+    def __init__(self, master=None):        ##standardly copied from documentation/previous project
 
         super().__init__(master)
         self.master = master
@@ -101,21 +102,21 @@ class Application(tk.Frame):
 
     def create_widgets(self):
         
-        def shutdown():
+        def shutdown():     ##a function that shuts down the thread by ending the loop completely
     
             exitloop=True
             loop=False
             print(str(exitloop) + " " + str(loop))
             print("shutdown complete")
 
-        self.quit = tk.Button(self, width = 10, height = 1, text = "QUIT")
+        self.quit = tk.Button(self, width = 10, height = 1, text = "QUIT")  ##making the buttons
         self.quit["command"] = self.master.destroy
         self.quit.grid(row = 99, column =1)
         self.end = tk.Button(self, width = 10, height = 1, text = "shutdown")
         self.end["command"] = lambda i=i: shutdown()
         self.end.grid(row = 2, column = 1)
 
-        self.timer_min_change = tk.Entry(self)
+        self.timer_min_change = tk.Entry(self)      ##making entry fields to change interval
         self.timer_min_change.insert(10, "900")
         self.timer_min_change.grid(row = 1, column = 0)
         
@@ -123,10 +124,10 @@ class Application(tk.Frame):
         self.timer_max_change.insert(10, "1800")
         self.timer_max_change.grid(row = 1, column = 2)
 
-        timer_min=self.timer_min_change.get()
+        timer_min=self.timer_min_change.get()       ##changing the interval (hopefully)
         timer_max=self.timer_max_change.get()
 
-abuse_thread = threading.Thread(target = verbal_abuse, daemon=True)
+abuse_thread = threading.Thread(target = verbal_abuse, daemon=True)     ##creates thread and starts it
 
 abuse_thread.start()
 
