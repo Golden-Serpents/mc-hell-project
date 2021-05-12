@@ -3,7 +3,6 @@ import time
 import requests
 import threading
 import tkinter as tk
-import asyncio
 
 clock=0
 loop=True
