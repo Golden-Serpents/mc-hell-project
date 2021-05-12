@@ -101,7 +101,7 @@ class Application(tk.Frame):
 
     def create_widgets(self):
         
-        def shutdown():     ##a function that shuts down the thread by ending the loop completely
+        def shutdown():     ##a function that shuts down the thread by ending the loops completely
     
             exitloop=True
             loop=False
