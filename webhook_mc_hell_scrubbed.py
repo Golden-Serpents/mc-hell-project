@@ -73,7 +73,7 @@ def verbal_abuse():     ##needs button to stop loop but keep running ie keep exi
         while loop == True:
             
             
-            clock=1 #chooses interval
+            clock=random.randint(timer_min, timer_max) #chooses interval
 
                 #chooses number for message to be chosen from
 
@@ -81,13 +81,32 @@ def verbal_abuse():     ##needs button to stop loop but keep running ie keep exi
 
                     #sets data to the message to send to the webhook
                 
-            print(message)
+            data = {
+
+                "content": message
+
+                }
+
+            requests.post(discord_webhook_url_MC_hell, data=data)
 
 
 
             time.sleep(clock)
 
+def print_timer():
 
+    global timer_min
+    global timer_max
+    global loop
+
+    while loop == True:
+
+        time.sleep(600)
+        print(timer_min)
+        print(timer_max)
+
+timer_thread = threading.Thread(target=print_timer, daemon = True)
+timer_thread.start()
 abuse_thread = threading.Thread(target = verbal_abuse, daemon = True)     ##creating and starting threads
 abuse_thread.start()
     
@@ -111,8 +130,17 @@ class Application(tk.Frame):
             loop=False
             print(str(exitloop) + " " + str(loop))
             print("shutdown complete")
-            
 
+        def timer_change():
+            global timer_min
+            global timer_max
+            
+            timer_min = self.timer_min_change.get()
+            timer_max = self.timer_max_change.get()
+            
+        global timer_min
+        global timer_max
+        
         self.quit = tk.Button(self, width = 10, height = 1, text = "QUIT")  ##buttons go brrrrrr
         self.quit["command"] = self.master.destroy
         self.quit.grid(row = 99, column =1)
@@ -128,6 +156,11 @@ class Application(tk.Frame):
         self.timer_max_change.insert(10, "1800")
         self.timer_max_change.grid(row = 1, column = 2)
 
+        self.change = tk.Button(self, width = 10, height = 1, text = "change timer")
+        self.change["command"] = lambda i=i: timer_change()
+        self.change.grid(row = 2, column = 0)
+        
+        
         ##need to get this functioning
 
         
@@ -138,9 +171,8 @@ root = tk.Tk()
 app = Application(master=root)
 
 app.master.title=("verbal abuse UI")
-app.master.geometry("400x100")
+app.master.geometry("450x100")
 app.mainloop()
-
 
 
 
