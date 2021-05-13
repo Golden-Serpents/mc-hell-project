@@ -63,11 +63,16 @@ MC_hell_messages=[connor_1, connor_2, suket_2, suket_3, suket_4, h4ck3r_1, xi_1,
 # Post the message to the Discord webhook at a random interval via random message selection
 
 def verbal_abuse():     ##needs button to stop loop but keep running ie keep exit loop = False
-    
-    while exitloop==False:
-            
+
+    global exitloop     ##absolute bodge of a fix for the loop to communicate between threads - 
+                        ##- considered a crime against humanity in 3 continents
+    while exitloop == False:
+        
+        global loop
+        
         while loop == True:
-                
+            
+            
             clock=1 #chooses interval
 
                 #chooses number for message to be chosen from
@@ -76,22 +81,15 @@ def verbal_abuse():     ##needs button to stop loop but keep running ie keep exi
 
                     #sets data to the message to send to the webhook
                 
-            data = {
-                    
-                "content": message
-                    
-                }
-                
-            requests.post(discord_webhook_url_MC_hell, data=data)
+            print(message)
 
 
 
             time.sleep(clock)
-            
-if __name__=="__main__":
 
-    abuse_thread = Process(target = verbal_abuse, daemon = True)     ##creating and starting threads
-    abuse_thread.start()
+
+abuse_thread = threading.Thread(target = verbal_abuse, daemon = True)     ##creating and starting threads
+abuse_thread.start()
     
 class Application(tk.Frame):
 
@@ -104,10 +102,16 @@ class Application(tk.Frame):
 
     def create_widgets(self):
         
-        def shutdown():     ##shuts down the thread by ending the loops
-    
-            abuse_thread.terminate()
+        def shutdown():     ##shuts down the thread by changing the loop variables to their opposite bool value
+            
+            global exitloop
+            global loop
+            
+            exitloop=True
+            loop=False
+            print(str(exitloop) + " " + str(loop))
             print("shutdown complete")
+            
 
         self.quit = tk.Button(self, width = 10, height = 1, text = "QUIT")  ##buttons go brrrrrr
         self.quit["command"] = self.master.destroy
@@ -136,7 +140,6 @@ app = Application(master=root)
 app.master.title=("verbal abuse UI")
 app.master.geometry("400x100")
 app.mainloop()
-
 
 
 

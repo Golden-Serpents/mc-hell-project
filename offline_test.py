@@ -53,13 +53,17 @@ shadow_copy_pasta_1="I've come to make an announcement: Zohal Karim's a bitch-as
 MC_hell_messages=[connor_1, connor_2, suket_2, suket_3, suket_4, h4ck3r_1, xi_1, alex_jones_1, eric_2, zohal_1, marine_1, madzia_2, madzia_3, madzia_4, madzia_5, eva_1, shadow_copy_pasta_1]
 
 
-
 def verbal_abuse():     ##needs button to stop loop but keep running ie keep exit loop = False
+
+    global exitloop
     
     while exitloop == False:
-            
+        
+        global loop
+        
         while loop == True:
-                
+            
+            
             clock=1 #chooses interval
 
                 #chooses number for message to be chosen from
@@ -90,7 +94,8 @@ class Application(tk.Frame):
     def create_widgets(self):
         
         def shutdown():     ##shuts down the thread by ending the loops
-    
+            global exitloop
+            global loop
             exitloop=True
             loop=False
             print(str(exitloop) + " " + str(loop))
