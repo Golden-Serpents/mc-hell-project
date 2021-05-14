@@ -95,7 +95,7 @@ def verbal_abuse():     ##needs button to stop loop but keep running ie keep exi
 
 def print_timer():
 
-    global timer_min
+    global timer_min        ##to show that timer_min and timer_max are changed, prints once every 10 mins: not necessary
     global timer_max
     global loop
 
