@@ -132,18 +132,34 @@ class Application(tk.Frame):
             print("shutdown complete")
 
         def timer_change():
+            
             global timer_min
             global timer_max
             
-            timer_min = self.timer_min_change.get()
+            timer_min = self.timer_min_change.get() ##getting numerical value from the entry fields
             timer_max = self.timer_max_change.get()
+
+        def full_shutdown():
+            
+            global exitloop     ##creating a command to end the loops and end the UI
+            global loop
+            
+            exitloop=True
+            loop=False
+            
+            print(str(exitloop) + " " + str(loop))
+            time.sleep(3)
+            
+            root.destroy()
+            
             
         global timer_min
         global timer_max
         
         self.quit = tk.Button(self, width = 10, height = 1, text = "QUIT")  ##buttons go brrrrrr
-        self.quit["command"] = self.master.destroy
+        self.quit["command"] = lambda i=i: full_shutdown()
         self.quit.grid(row = 99, column =1)
+        
         self.end = tk.Button(self, width = 10, height = 1, text = "shutdown")
         self.end["command"] = lambda i=i: shutdown()
         self.end.grid(row = 2, column = 1)
